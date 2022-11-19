@@ -14,7 +14,6 @@
   npm install
   ```
 
-
 # :technologist: Development
 
 ## :globe_with_meridians: Start the server in your local machine
