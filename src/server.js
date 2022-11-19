@@ -1,15 +1,12 @@
-const express = require('express');
+const http = require('http');
 require('dotenv').config();
 
-const app = express();
+const app = require('./app');
+
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+const server = http.createServer(app);
 
-app.get('/', (req, res) => {
-  res.send('<h1>Simple Voting System works!</h1>');
-});
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server listening on the port ${PORT}...`);
 });
