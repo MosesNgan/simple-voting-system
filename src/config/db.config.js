@@ -24,6 +24,7 @@ const connect = () => {
   const db = {};
   db.Sequelize = Sequelize;
   db.sequelize = sequelize;
+  db.campaigns = require('../models/campaigns.model')(sequelize, DataTypes, Model);
 
   return db;
 
