@@ -10,17 +10,17 @@ class campaignController {
   async createCampaign(req, res) {
     const campaign = req.body;
 
-    if (!campaign.topic || !campaign.startedAt || !campaign.endedAt) {
-      return res.status(400).json({
-        error: 'Missing required campaign property.'
-      });
-    }
-
     campaign.startedAt = new Date(campaign.startedAt);
     campaign.endedAt = new Date(campaign.endedAt);
-    if (isNaN(campaign.startedAt) || isNaN(campaign.endedAt)) {
-      return res.status(400).json({
-        error: 'Invalid campaign dates.'
+
+    if (!campaign.topic ||
+        !campaign.startedAt ||
+        !campaign.endedAt ||
+        isNaN(campaign.startedAt) ||
+        isNaN(campaign.endedAt)) {
+      return res.status(422).json({
+        code: 'invalid_request_body',
+        message: 'Validation failed.'
       });
     }
 
@@ -38,7 +38,8 @@ class campaignController {
 
     if (!ids.includes(campaignId)) {
       return res.status(404).json({
-        error: 'Campaign not found.',
+        code: 'resource_not_found',
+        message: 'Recource doesn\'t exist.'
       });
     }
 

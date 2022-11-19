@@ -1,0 +1,188 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Voting System API",
+    "description": "",
+    "version": "1.0.0",
+    "contact": {
+      "email": "moses.ngan.tf@gmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "Campaigns",
+      "description": "Endpoints for Campaign model."
+    }
+  ],
+  "paths": {
+    "/campaigns": {
+      "get" : {
+        "summary": "User attempts to get all the campaigns.",
+        "tags": ["Campaigns"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "All campaigns are reutrned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Campaign"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "User attempts to create a campaign.",
+        "tags": ["Campaigns"],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "topic": {
+                    "$ref": "#/components/schemas/valueObject.topic"
+                  },
+                  "startedAt": {
+                    "$ref": "#/components/schemas/valueObject.formattedDateTimeString"
+                  },
+                  "endedAt": {
+                    "$ref": "#/components/schemas/valueObject.formattedDateTimeString"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A new campaign is successfully created and returned in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Campaign"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "One of the following:<br>- Missing required property; or<br>- Invalid property value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/responses/422InvalidRequestBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/:id": {
+      "delete": {
+        "summary": "User attempts to delete a campaign.",
+        "tags": ["Campaigns"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Target campaign_id to be deleted.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The target campaign is deleted and no content is returned."
+          },
+          "404": {
+            "description": "Campaign with the provided id doesn't exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/responses/404NotFound"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "Campaign": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/valueObject.id"
+          },
+          "topic": {
+            "$ref": "#/components/schemas/valueObject.topic"
+          },
+          "startedAt": {
+            "$ref": "#/components/schemas/valueObject.formattedDateTimeString"
+          },
+          "endedAt": {
+            "$ref": "#/components/schemas/valueObject.formattedDateTimeString"
+          }
+        }
+      },
+      "valueObject.id": {
+        "type": "integer",
+        "format": "int64",
+        "example": 1234
+      },
+      "valueObject.topic": {
+        "type": "string",
+        "exmaple": "Who is the best NBA player in history?"
+      },
+      "valueObject.formattedDateTimeString": {
+        "type": "string",
+        "format": "date-time",
+        "example": "2022-09-01T09:00:00.000+08:00"
+      }
+    },
+    "responses": {
+      "404NotFound": {
+        "description": "The required resource doesn't exist.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "resource_not_found"
+          },
+          "message": {
+            "type": "string",
+            "example": "Recource doesn't exist."
+          }
+        }
+      },
+      "422InvalidRequestBody": {
+        "description": "The values provided in the request body are not valid.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "invalid_request_body"
+          },
+          "message": {
+            "type": "string",
+            "example": "Validation failed."
+          }
+        }
+      }
+    }
+  }
+}
