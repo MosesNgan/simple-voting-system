@@ -1,8 +1,12 @@
 const express = require('express');
+const morgan = require('morgan');
 
 const campaignsRouter = require('./routers/campaigns/campaigns.router');
 
 const app = express();
+
+app.use(morgan('combined'));
+
 app.use(express.json());
 
 app.use('/campaigns', campaignsRouter);
