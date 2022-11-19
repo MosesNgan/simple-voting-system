@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "watch": "nodemon server.js",
+    "lint": "./node_modules/.bin/eslint .",
+    "pretty": "prettier --write '**/*.{js,json}' '!node_modules/**'",
+    "postpretty": "npm run lint --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +17,9 @@
     "express": "^4.18.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1"
   }
 }
