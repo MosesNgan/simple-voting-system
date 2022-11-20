@@ -13,7 +13,7 @@ class CampaignsController {
     campaign.startedAt = new Date(campaign.startedAt);
     campaign.endedAt = new Date(campaign.endedAt);
 
-    if (!campaign.topic ||
+    if (!campaign.question ||
         !campaign.startedAt ||
         !campaign.endedAt ||
         isNaN(campaign.startedAt) ||

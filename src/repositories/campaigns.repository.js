@@ -1,4 +1,4 @@
-const { connect } = require('../config/db.config');
+const { connect } = require('../db/models/index');
 
 class CampaignsRepository {
   constructor() {
@@ -7,7 +7,7 @@ class CampaignsRepository {
 
   async getCampaigns() {
     try {
-      const campaigns = await this.db.campaigns.findAll();
+      const campaigns = await this.db.Campaign.findAll();
       // TODO: add sorting rules
       return campaigns;
     } catch (err) {
@@ -20,7 +20,7 @@ class CampaignsRepository {
     let data = {};
     try {
       campaign.createdate = new Date().toISOString();
-      data = await this.db.campaigns.create(campaign);
+      data = await this.db.Campaign.create(campaign);
     } catch(err) {
       console.log(err);
     }
@@ -30,7 +30,7 @@ class CampaignsRepository {
   async deleteCampaign(campaignId) {
     let data = {};
     try {
-      data = await this.db.campaigns.destroy({
+      data = await this.db.Campaign.destroy({
         where: {
           id: campaignId
         }
