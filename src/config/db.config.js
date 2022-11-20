@@ -25,9 +25,9 @@ const connect = () => {
   db.Sequelize = Sequelize;
   db.sequelize = sequelize;
   db.campaigns = require('../models/campaigns.model')(sequelize, DataTypes, Model);
+  db.candidates = require('../models/candidates.model')(sequelize, DataTypes, Model);
 
   return db;
-
 };
 
 module.exports = {
