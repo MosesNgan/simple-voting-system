@@ -1,6 +1,6 @@
 const { connect } = require('../config/db.config');
 
-class CampaignRepository {
+class CampaignsRepository {
   constructor() {
     this.db = connect();
   }
@@ -42,4 +42,4 @@ class CampaignRepository {
   }
 }
 
-module.exports = new CampaignRepository();
+module.exports = new CampaignsRepository();

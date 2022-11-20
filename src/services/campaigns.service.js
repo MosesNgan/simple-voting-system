@@ -1,19 +1,19 @@
-const campaignRepository = require('../repositories/campaigns.repository');
+const campaignsRepository = require('../repositories/campaigns.repository');
 
-class CampaignService {
+class CampaignsService {
   constructor() {}
 
   async getCampaigns() {
-    return await campaignRepository.getCampaigns();
+    return await campaignsRepository.getCampaigns();
   }
 
   async createCampaign(campaign) {
-    return await campaignRepository.createCampaign(campaign);
+    return await campaignsRepository.createCampaign(campaign);
   }
 
   async deleteCampaign(campaignId) {
-    return await campaignRepository.deleteCampaign(campaignId);
+    return await campaignsRepository.deleteCampaign(campaignId);
   }
 }
 
-module.exports = new CampaignService();
+module.exports = new CampaignsService();

@@ -1,6 +1,6 @@
 const campaignsService = require('../../services/campaigns.service');
 
-class campaignController {
+class CampaignsController {
 
   async getCampaigns(req, res) {
     const campaigns = await campaignsService.getCampaigns();
@@ -48,4 +48,4 @@ class campaignController {
   }
 }
 
-module.exports = new campaignController();
+module.exports = new CampaignsController();
