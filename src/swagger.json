@@ -10,7 +10,7 @@
   },
   "tags": [
     {
-      "name": "Campaigns",
+      "name": "Campaign",
       "description": "Endpoints for Campaign model."
     }
   ],
@@ -18,7 +18,7 @@
     "/campaigns": {
       "get" : {
         "summary": "User attempts to get all the campaigns.",
-        "tags": ["Campaigns"],
+        "tags": ["Campaign"],
         "parameters": [],
         "responses": {
           "200": {
@@ -28,7 +28,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Campaign"
+                    "$ref": "#/components/schemas/campaign"
                   }
                 }
               }
@@ -38,23 +38,30 @@
       },
       "post": {
         "summary": "User attempts to create a campaign.",
-        "tags": ["Campaigns"],
+        "tags": ["Campaign"],
         "requestBody": {
-          "description": "",
+          "description": "At least 2 candidates needed.",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "topic": {
-                    "$ref": "#/components/schemas/valueObject.topic"
+                  "question": {
+                    "$ref": "#/components/schemas/valueObject.campaignQuestion"
                   },
                   "startedAt": {
                     "$ref": "#/components/schemas/valueObject.formattedDateTimeString"
                   },
                   "endedAt": {
                     "$ref": "#/components/schemas/valueObject.formattedDateTimeString"
+                  },
+                  "candidateNames": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/valueObject.candidateName"
+                    },
+                    "minItems": 2
                   }
                 }
               }
@@ -68,13 +75,13 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/Campaign"
+                  "$ref": "#/components/schemas/campaign"
                 }
               }
             }
           },
           "400": {
-            "description": "One of the following:<br>- Missing required property; or<br>- Invalid property value.",
+            "description": "One of the following:<br>- Missing required property (e.g. Only 1 candidate name is provided.); or<br>- Invalid property value.",
             "content": {
               "application/json": {
                 "schema": {
@@ -90,7 +97,7 @@
     "/campaigns/:id": {
       "delete": {
         "summary": "User attempts to delete a campaign.",
-        "tags": ["Campaigns"],
+        "tags": ["Campaign"],
         "parameters": [
           {
             "name": "id",
@@ -122,7 +129,7 @@
 
   "components": {
     "schemas": {
-      "Campaign": {
+      "campaign": {
         "type": "object",
         "properties": {
           "id": {
@@ -146,6 +153,18 @@
           }
         }
       },
+      "candidate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/valueObject.id"
+          },
+          "name": {
+            "$ref": "#/components/schemas/valueObject.candidateName"
+          },
+          "voteCount": {
+            "type": "integer",
+            "example": 192453
           }
         }
       },

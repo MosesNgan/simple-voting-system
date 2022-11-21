@@ -9,20 +9,30 @@ class CampaignsController {
 
   async createCampaign(req, res) {
     const campaign = req.body;
-
     campaign.startedAt = new Date(campaign.startedAt);
     campaign.endedAt = new Date(campaign.endedAt);
 
     if (!campaign.question ||
         !campaign.startedAt ||
         !campaign.endedAt ||
+        !campaign.candidateNames ||
         isNaN(campaign.startedAt) ||
-        isNaN(campaign.endedAt)) {
+        isNaN(campaign.endedAt) ||
+        campaign.candidateNames.length < 2) {
       return res.status(422).json({
         code: 'invalid_request_body',
         message: 'Validation failed.'
       });
     }
+
+    const candidatesData = campaign.candidateNames.map((name) => {
+      return {
+        name: name,
+        voteCount: 0
+      };
+    });
+    delete campaign.candidateNames;
+    campaign.candidates = candidatesData;
 
     const createdCampaign = await campaignsService.createCampaign(campaign);
     return res.status(201).json(createdCampaign);

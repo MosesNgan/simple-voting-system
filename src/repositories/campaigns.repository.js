@@ -19,8 +19,13 @@ class CampaignsRepository {
   async createCampaign(campaign) {
     let data = {};
     try {
-      campaign.createdate = new Date().toISOString();
-      data = await this.db.Campaign.create(campaign);
+      const createdCampaign = await this.db.Campaign.create(campaign,
+        {
+          include: [ 'candidates' ]
+        }
+      );
+
+      data = await this.db.Campaign.findByPk(createdCampaign.id, { include: 'candidates' });
     } catch(err) {
       console.log(err);
     }
