@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         }
       });
+      Candidate.hasMany(models.Vote, { as:'votes', foreignKey:'candidateId' });
     }
   }
   Candidate.init({
