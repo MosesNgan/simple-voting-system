@@ -12,6 +12,10 @@
     {
       "name": "Campaign",
       "description": "Endpoints for Campaign model."
+    },
+    {
+      "name": "Vote",
+      "description": "Endpoints for Vote model."
     }
   ],
   "paths": {
@@ -80,7 +84,7 @@
               }
             }
           },
-          "400": {
+          "422": {
             "description": "One of the following:<br>- Missing required property (e.g. Only 1 candidate name is provided.); or<br>- Invalid property value.",
             "content": {
               "application/json": {
@@ -118,6 +122,55 @@
                 "schema": {
                   "type": "object",
                   "$ref": "#/components/responses/404NotFound"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/votes": {
+      "post": {
+        "summary": "User attempts to vote in a campaign.",
+        "tags": ["Vote"],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "hkidNumber": {
+                    "$ref": "#/components/schemas/valueObject.hkidNumber"
+                  },
+                  "candidateId": {
+                    "$ref": "#/components/schemas/valueObject.id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A vote is successfully submitted and the campagin is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/campaign"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "One of the following:<br>- The campaign is ended.<br>- Invalid property value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/responses/422InvalidRequestBody"
                 }
               }
             }
@@ -185,6 +238,10 @@
       "valueObject.candidateName": {
         "type": "string",
         "example": "Michael Jordan"
+      },
+      "valueObject.hkidNumber": {
+        "type": "string",
+        "example": "A123456(7)"
       }
     },
     "responses": {
