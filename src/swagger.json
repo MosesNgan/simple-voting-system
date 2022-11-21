@@ -128,14 +128,24 @@
           "id": {
             "$ref": "#/components/schemas/valueObject.id"
           },
-          "topic": {
-            "$ref": "#/components/schemas/valueObject.topic"
+          "question": {
+            "$ref": "#/components/schemas/valueObject.campaignQuestion"
           },
           "startedAt": {
             "$ref": "#/components/schemas/valueObject.formattedDateTimeString"
           },
           "endedAt": {
             "$ref": "#/components/schemas/valueObject.formattedDateTimeString"
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "$ref":"#/components/schemas/candidate"
+            },
+            "minItems": 2
+          }
+        }
+      },
           }
         }
       },
@@ -144,14 +154,18 @@
         "format": "int64",
         "example": 1234
       },
-      "valueObject.topic": {
-        "type": "string",
-        "exmaple": "Who is the best NBA player in history?"
-      },
       "valueObject.formattedDateTimeString": {
         "type": "string",
         "format": "date-time",
         "example": "2022-09-01T09:00:00.000+08:00"
+      },
+      "valueObject.campaignQuestion": {
+        "type": "string",
+        "example": "Who is the best NBA player in history?"
+      },
+      "valueObject.candidateName": {
+        "type": "string",
+        "example": "Michael Jordan"
       }
     },
     "responses": {

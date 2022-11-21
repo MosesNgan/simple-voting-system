@@ -7,7 +7,7 @@ class CampaignsRepository {
 
   async getCampaigns() {
     try {
-      const campaigns = await this.db.Campaign.findAll();
+      const campaigns = await this.db.Campaign.findAll({ include: 'candidates' });
       // TODO: add sorting rules
       return campaigns;
     } catch (err) {
