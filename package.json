@@ -4,6 +4,12 @@
   "description": "",
   "private": true,
   "scripts": {
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install": "npm install-server && npm install-client",
+    "server": "npm run watch --prefix server",
+    "client": "npm start --prefix client",
+    "deploy": "npm run build --prefix client & npm start --prefix server",
     "watch": "npm run watch --prefix server",
     "test": "npm test --prefix server && npm test --prefix client",
     "test-watch": "npm run test-watch --prefix server"

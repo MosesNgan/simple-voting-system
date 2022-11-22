@@ -4,6 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
+    "start": "node src/server.js",
     "watch": "nodemon src/server.js",
     "lint": "./node_modules/.bin/eslint ./src",
     "pretty": "prettier --write '**/*.{js,json}' '!node_modules/**'",
