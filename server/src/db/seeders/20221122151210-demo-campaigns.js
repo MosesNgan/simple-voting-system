@@ -12,7 +12,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        question: 'Which HK CEO candidate do you prefer?.',
+        question: 'Which HK CEO candidate do you prefer?',
         startedAt: 'January 1, 2020',
         endedAt: 'December 31, 2020',
         createdAt: new Date(),
