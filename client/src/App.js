@@ -32,6 +32,7 @@ const App = () => {
 
   return(
     <div className="App">
+      <h1>Simple Voting System</h1>
       <SearchBox
         className='search-box'
         placeholder='search questions'
