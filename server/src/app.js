@@ -1,10 +1,15 @@
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 
 const campaignsRouter = require('./routers/campaigns/campaigns.router');
 const votesRouter = require('./routers/votes/votes.router');
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 
 app.use(morgan('combined'));
 

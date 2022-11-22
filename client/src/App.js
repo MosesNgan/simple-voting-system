@@ -1,25 +1,45 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+
+import CardList from './components/card-list/card-list.component';
+import SearchBox from './components/search-box/search-box.component';
+
+import useCampaigns from "./hooks/useCampaigns";
+import useVotes from "./hooks/useVotes";
+
 import './App.css';
 
-function App() {
-  return (
+const App = () => {
+  const campaigns = useCampaigns();
+  const {
+    submitVote,
+  } = useVotes();
+
+  const [searchField, setSearchField] = useState('');
+  const [filteredCampaigns, setFilteredCampaigns] = useState(campaigns);
+
+  useEffect(()=> {
+    const newFilteredCampaigns = campaigns.filter((campaign) => {
+      return campaign.question.toLocaleLowerCase().includes(searchField);
+    });
+    setFilteredCampaigns(newFilteredCampaigns);
+  }, [campaigns, searchField, submitVote])
+
+  const onSearchChange = (event) => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+
+    setSearchField(searchFieldString);
+  }
+
+  return(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchBox
+        className='search-box'
+        placeholder='search questions'
+        onChangeHandler={onSearchChange}
+      />
+      <CardList campaigns={filteredCampaigns} submitVote={submitVote}/>
     </div>
-  );
-}
+  )
+};
 
 export default App;
