@@ -154,18 +154,18 @@
         },
         "responses": {
           "201": {
-            "description": "A vote is successfully submitted and the campagin is returned.",
+            "description": "A vote is successfully submitted and returned.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/campaign"
+                  "$ref": "#/components/schemas/vote"
                 }
               }
             }
           },
           "422": {
-            "description": "One of the following:<br>- The campaign is ended.<br>- Invalid property value.",
+            "description": "One of the following:<br>- Missing requried property.<br>- Invalid HKID number.<br>- Candidate doesn't exist.<br>- The campaign is ended.",
             "content": {
               "application/json": {
                 "schema": {
@@ -218,6 +218,20 @@
           "voteCount": {
             "type": "integer",
             "example": 192453
+          }
+        }
+      },
+      "vote": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/valueObject.id"
+          },
+          "hkidNumber": {
+            "$ref": "#/components/schemas/valueObject.hkidNumber"
+          },
+          "candidateId": {
+            "$ref": "#/components/schemas/valueObject.id"
           }
         }
       },

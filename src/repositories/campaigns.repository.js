@@ -16,16 +16,24 @@ class CampaignsRepository {
     }
   }
 
+  async getCampaign(id) {
+    let data = {};
+    try {
+      data = await this.db.Campaign.findByPk(id, { include: 'candidates' });
+    } catch (err) {
+      console.log(err);
+    }
+    return data;
+  }
+
   async createCampaign(campaign) {
     let data = {};
     try {
-      const createdCampaign = await this.db.Campaign.create(campaign,
+      data = await this.db.Campaign.create(campaign,
         {
           include: [ 'candidates' ]
         }
       );
-
-      data = await this.db.Campaign.findByPk(createdCampaign.id, { include: 'candidates' });
     } catch(err) {
       console.log(err);
     }

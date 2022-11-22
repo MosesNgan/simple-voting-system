@@ -7,6 +7,10 @@ class CampaignsService {
     return await campaignsRepository.getCampaigns();
   }
 
+  async getCampaign(id) {
+    return await campaignsRepository.getCampaign(id);
+  }
+
   async createCampaign(campaign) {
     return await campaignsRepository.createCampaign(campaign);
   }
