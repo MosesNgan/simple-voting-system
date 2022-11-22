@@ -22,4 +22,4 @@
   ```bash
   npm run watch
   ```
-- you should be able to access the application via broweser
+- you should be able to access the application via browser
