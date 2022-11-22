@@ -1,4 +1,5 @@
 const votesRepository = require('../repositories/votes.repository');
+const { connect } = require('../db/models/index');
 
 class VotesService {
   constructor() {}
@@ -8,9 +9,12 @@ class VotesService {
   }
 
   async createVote(vote, candidate) {
-    // TODO: wrap into one transaction
-    const createdVote = await votesRepository.createVote(vote);
-    await candidate.increment('voteCount', { by: 1 });
+    const t = await connect().sequelize.transaction();
+
+    const createdVote = await votesRepository.createVote(vote, { transaction: t });
+    await candidate.increment('voteCount', { by: 1 }, { transaction: t });
+
+    await t.commit();
     return createdVote;
   }
 }
