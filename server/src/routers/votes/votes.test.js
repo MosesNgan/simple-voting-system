@@ -118,4 +118,28 @@ describe('Test POST /votes', () => {
 
   test.skip('it should catch invalid HKID Number.', async () => {
   });
+
+  test('it should catch repeated votes on a campaign.', async () => {
+    const ongoingCampaign = await createCampaign(ongoingCampaignData);
+    const candidate = await getValidCandidate(ongoingCampaign.id);
+
+    const validVoteData = {
+      hkidNumber: validHkidNumber,
+      candidateId: candidate.id,
+    };
+
+    // First Vote
+    await supertest(app).post('/votes').send(validVoteData);
+
+    const secondVoteResponse = await supertest(app)
+      .post('/votes')
+      .send(validVoteData)
+      .expect('Content-Type', /json/)
+      .expect(422);
+
+    expect(secondVoteResponse.body).toStrictEqual({
+      code: 'invalid_request_body',
+      message: 'Validation failed.'
+    });
+  });
 });

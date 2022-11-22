@@ -165,7 +165,7 @@
             }
           },
           "422": {
-            "description": "One of the following:<br>- Missing requried property.<br>- Invalid HKID number.<br>- Candidate doesn't exist.<br>- The campaign is ended.",
+            "description": "One of the following:<br>- Missing requried property.<br>- Invalid HKID number.<br>- Candidate doesn't exist.<br>- The campaign is ended.<br>- This HKID has voted in this campaign.",
             "content": {
               "application/json": {
                 "schema": {

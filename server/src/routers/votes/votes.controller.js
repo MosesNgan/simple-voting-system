@@ -21,7 +21,20 @@ class VotesController {
 
     const campaign = await campaignsService.getCampaign(candidate.campaignId);
 
-    if (campaign.endedAt < new Date()) {
+    // check if this HKID have voted in this campaign yet
+    const candidatesOfThisCampaign = await campaign.getCandidates();
+    const candidateIds = candidatesOfThisCampaign.map((candidate) => candidate.id);
+
+    const voteOfThisHkidInThisCampaign = await votesService.getVotes({
+      where: {
+        candidateId: candidateIds,
+        hkidNumber: vote.hkidNumber
+      }
+    });
+    const voted = voteOfThisHkidInThisCampaign.length > 0;
+
+    if (campaign.endedAt < new Date() ||
+        voted) {
       return res.status(422).json({
         code: 'invalid_request_body',
         message: 'Validation failed.'
