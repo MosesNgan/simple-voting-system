@@ -21,7 +21,8 @@
     "pg": "^8.8.0",
     "sequelize": "^6.25.6",
     "swagger-jsdoc": "^6.2.5",
-    "swagger-ui-express": "^4.6.0"
+    "swagger-ui-express": "^4.6.0",
+    "validid": "^2.2.0"
   },
   "devDependencies": {
     "eslint": "^8.28.0",

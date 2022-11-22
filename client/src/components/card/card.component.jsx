@@ -10,7 +10,7 @@ const Card = ({ campaign, submitVote }) => {
       <form onSubmit={submitVote} style={{display: "inline-grid", gridTemplateColumns: "auto auto", gridGap: "10px 20px"}}>
 
         <label htmlFor="hkid-number">HKID Number</label>
-        <input type="text" id="hkid-number" name="hkid-number" />
+        <input type="text" id="hkid-number" name="hkid-number" placeholder="e.g. A1234567" />
 
         <label htmlFor="candidate-id">Candidates</label>
         <select id="candidate-id" name="candidate-id">

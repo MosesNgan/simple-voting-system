@@ -1,6 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 const { Candidate } = require('./candidate');
+const validid = require('validid');
 
 module.exports = (sequelize, DataTypes) => {
   class Vote extends Model {
@@ -25,7 +26,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     hkidNumber: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isValidFormat(value) {
+          if (!validid.hkid(value)) {
+            throw new Error('Invalid HKID Number.');
+          }
+        }
+      }
     }
   }, {
     sequelize,

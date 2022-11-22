@@ -35,8 +35,7 @@ const getValidCandidate = async (campaignId) => {
   return candidate;
 };
 
-const validHkidNumber = 'A123456(7)';
-
+const validHkidNumber = 'N6393053';
 describe('Test POST /votes', () => {
   test('it should respond with 201 success.', async () => {
     const ongoingCampaign = await createCampaign(ongoingCampaignData);
@@ -116,7 +115,25 @@ describe('Test POST /votes', () => {
     });
   });
 
-  test.skip('it should catch invalid HKID Number.', async () => {
+  test('it should catch invalid HKID Number.', async () => {
+    const ongoingCampaign = await createCampaign(ongoingCampaignData);
+    const candidate = await getValidCandidate(ongoingCampaign.id);
+
+    const invalidHkidNumberVoteData = {
+      hkidNumber: 'Invalid HKID Number',
+      candidateId: candidate.id,
+    };
+
+    const response = await supertest(app)
+      .post('/votes')
+      .send(invalidHkidNumberVoteData)
+      .expect('Content-Type', /json/)
+      .expect(422);
+
+    expect(response.body).toStrictEqual({
+      code: 'invalid_request_body',
+      message: 'Validation failed.'
+    });
   });
 
   test('it should catch repeated votes on a campaign.', async () => {

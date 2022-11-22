@@ -1,18 +1,19 @@
 const votesService = require('../../services/votes.service');
 const candidatesService = require('../../services/candidates.service');
 const campaignsService = require('../../services/campaigns.service');
+const validid = require('validid');
 
 class VotesController {
 
   async createVote(req, res) {
     const vote = req.body;
 
-    // TODO: check hkid validity
     const candidate = await candidatesService.getCandidate(vote.candidateId);
 
     if (!vote.candidateId ||
+        !candidate ||
         !vote.hkidNumber ||
-        !candidate) {
+        !validid.hkid(vote.hkidNumber)) {
       return res.status(422).json({
         code: 'invalid_request_body',
         message: 'Validation failed.'
