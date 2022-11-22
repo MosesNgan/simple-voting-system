@@ -1,7 +1,7 @@
 const supertest = require('supertest');
 const app = require('../../app');
 
-describe('Test GET /campaigns', () => {
+describe('Test GET /api/campaigns', () => {
   const desiredCampaignResponse = {
     id: expect.any(Number),
     question: expect.any(String),
@@ -9,7 +9,7 @@ describe('Test GET /campaigns', () => {
   };
   test('it should respond with 200 success', async () => {
     const response = await supertest(app)
-      .get('/campaigns')
+      .get('/api/campaigns')
       .expect('Content-Type', /json/)
       .expect(200);
 
@@ -23,7 +23,7 @@ describe('Test GET /campaigns', () => {
   });
 });
 
-describe('Test POST /campaigns', () => {
+describe('Test POST /api/campaigns', () => {
   const validCampaignData = {
     question: 'Who is the best NBA player in history?',
     startedAt: 'January 1, 2023',
@@ -55,7 +55,7 @@ describe('Test POST /campaigns', () => {
 
   test('it should respond with 201 success.', async () => {
     const response = await supertest(app)
-      .post('/campaigns')
+      .post('/api/campaigns')
       .send(validCampaignData)
       .expect('Content-Type', /json/)
       .expect(201);
@@ -73,7 +73,7 @@ describe('Test POST /campaigns', () => {
 
   test('it should catch missing property.', async () => {
     const response = await supertest(app)
-      .post('/campaigns')
+      .post('/api/campaigns')
       .send(campaignDataWithoutTopic)
       .expect('Content-Type', /json/)
       .expect(422);
@@ -86,7 +86,7 @@ describe('Test POST /campaigns', () => {
 
   test('it should catch invalid datetime.', async () => {
     const response = await supertest(app)
-      .post('/campaigns')
+      .post('/api/campaigns')
       .send(campaignDataWithInvalidDatetime)
       .expect('Content-Type', /json/)
       .expect(422);
@@ -99,7 +99,7 @@ describe('Test POST /campaigns', () => {
 
   test('it should catch cases with only 1 candidate name provided.', async () => {
     const response = await supertest(app)
-      .post('/campaigns')
+      .post('/api/campaigns')
       .send(campaignDataWithOneCandidateName)
       .expect('Content-Type', /json/)
       .expect(422);

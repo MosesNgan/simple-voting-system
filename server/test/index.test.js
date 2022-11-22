@@ -4,7 +4,7 @@ const app = require('../src/app');
 describe('Test GET /', () => {
   test('it should responsd with 200 success', async () => {
     const response = await supertest(app)
-      .get('/')
+      .get('/api')
       .expect('Content-Type', /html/)
       .expect(200);
 

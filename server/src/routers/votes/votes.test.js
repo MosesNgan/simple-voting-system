@@ -19,7 +19,7 @@ const endedCampaignData = {
 
 const createCampaign = async (campaignData) => {
   const response = await supertest(app)
-    .post('/campaigns')
+    .post('/api/campaigns')
     .send(campaignData);
 
   const newCampaign = response.body;
@@ -36,7 +36,8 @@ const getValidCandidate = async (campaignId) => {
 };
 
 const validHkidNumber = 'N6393053';
-describe('Test POST /votes', () => {
+
+describe('Test POST /api/votes', () => {
   test('it should respond with 201 success.', async () => {
     const ongoingCampaign = await createCampaign(ongoingCampaignData);
     const candidate = await getValidCandidate(ongoingCampaign.id);
@@ -48,7 +49,7 @@ describe('Test POST /votes', () => {
     };
 
     const response = await supertest(app)
-      .post('/votes')
+      .post('/api/votes')
       .send(validVoteData)
       .expect('Content-Type', /json/)
       .expect(201);
@@ -67,7 +68,7 @@ describe('Test POST /votes', () => {
     };
 
     const response = await supertest(app)
-      .post('/votes')
+      .post('/api/votes')
       .send(voteDataWithoutHkidNumber)
       .expect('Content-Type', /json/)
       .expect(422);
@@ -84,7 +85,7 @@ describe('Test POST /votes', () => {
     };
 
     const response = await supertest(app)
-      .post('/votes')
+      .post('/api/votes')
       .send(voteDataWithInvalidCandidateId)
       .expect('Content-Type', /json/)
       .expect(422);
@@ -104,7 +105,7 @@ describe('Test POST /votes', () => {
     };
 
     const response = await supertest(app)
-      .post('/votes')
+      .post('/api/votes')
       .send(voteData)
       .expect('Content-Type', /json/)
       .expect(422);
@@ -125,7 +126,7 @@ describe('Test POST /votes', () => {
     };
 
     const response = await supertest(app)
-      .post('/votes')
+      .post('/api/votes')
       .send(invalidHkidNumberVoteData)
       .expect('Content-Type', /json/)
       .expect(422);
@@ -146,10 +147,10 @@ describe('Test POST /votes', () => {
     };
 
     // First Vote
-    await supertest(app).post('/votes').send(validVoteData);
+    await supertest(app).post('/api/votes').send(validVoteData);
 
     const secondVoteResponse = await supertest(app)
-      .post('/votes')
+      .post('/api/votes')
       .send(validVoteData)
       .expect('Content-Type', /json/)
       .expect(422);
