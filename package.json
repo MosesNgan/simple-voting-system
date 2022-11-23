@@ -11,7 +11,12 @@
     "server-watch": "npm run watch --prefix server",
     "deploy": "npm run build --prefix client & npm start --prefix server",
     "test": "npm test --prefix server && npm test --prefix client",
-    "test-watch": "npm run test-watch --prefix server"
+    "test-watch": "npm run test-watch --prefix server",
+    "createdb": "createdb simple_voting_system_development & createdb simple_voting_system_test",
+    "migrate-dev": "cd server && npx sequelize-cli db:migrate",
+    "migrate-test": "cd server && npx sequelize-cli db:migrate --env test",
+    "migrate": "npm run migrate-dev && npm run migrate-test",
+    "seed": "cd server && npx sequelize-cli db:seed:all"
   },
   "keywords": [],
   "author": "",
